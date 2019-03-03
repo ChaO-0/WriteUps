@@ -1,0 +1,27 @@
+Foremost version 1.5.7 by Jesse Kornblum, Kris Kendall, and Nick Mikus
+Audit File
+
+Foremost started at Sun Mar  3 15:59:09 2019
+Invocation: foremost art.png 
+Output directory: /home/chao/Documents/CTF/TAMUCTF/Misc/I_heard_you_like_files/output
+Configuration file: /etc/foremost.conf
+------------------------------------------------------------------
+File: art.png
+Start: Sun Mar  3 15:59:09 2019
+Length: 3 MB (3518869 bytes)
+ 
+Num	 Name (bs=512)	       Size	 File Offset	 Comment 
+
+0:	00006700.zip 	      86 KB 	    3430685 	 
+1:	00000000.png 	       3 MB 	          0 	  (1920 x 1080)
+2:	00006657.pdf 	      21 KB 	    3408641 	 
+Finish: Sun Mar  3 15:59:09 2019
+
+3 FILES EXTRACTED
+	
+zip:= 1
+png:= 1
+pdf:= 1
+------------------------------------------------------------------
+
+Foremost finished at Sun Mar  3 15:59:09 2019
