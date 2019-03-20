@@ -15,9 +15,9 @@ def findKey():
     file = open("enkripsi", "rb")
     file = file.read()
     for i, l in enumerate(known):
-        kunci = ord(file[i])
+        enc = ord(file[i])
         teks = ord(l)
-        key.append((chr((kunci - teks) % 127)))
+        key.append((chr((enc - teks) % 127)))
     return ''.join(key)
 
 def decryption():
