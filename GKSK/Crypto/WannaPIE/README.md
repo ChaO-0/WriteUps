@@ -34,4 +34,4 @@ Run the script and decrypt files, flag is on png file, the flag is looks like th
 ![Flag](img/realflagpart2.png)
 
 # 3. Flag
-Flag : GKSK{__i-gave_y0u_th3_PIE_Because__y0u_br1ng_me_th3-correct_seed__}
+Flag : GKSK{\_\_i-gave_y0u_th3_PIE_Because__y0u_br1ng_me_th3-correct_seed\_\_}
