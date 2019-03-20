@@ -23,7 +23,7 @@ Oh right, the change time of encrypted file is in **stat.info**
 
 Okay, we got the random seed and now we could find the **key** and **iv** for the **AES-CBC** and decrypt the encrypted file
 
-*remember to use python 3 for the random seed because the encryption using python 3*
+*remember to use python 3 for the random seed because the encryption is using python 3 for the random seed*
 
 The script that i used to find the **key** and **iv** and decrypting encrypted file is on below
 ![Python Script](img/4.png)
