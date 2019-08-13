@@ -1,0 +1,5 @@
+sapiderman butuh kamu! telah ditemukan file rahasia milik para penjahat kota new york(kurangi_limbah.7z)! aku menemukan passwordnya tapi masih terenkripsi yaitu "ABhqFnYS8OznCcm+ZjhVIeXqc67d9u5VLg==" tanpa tanda kutip. untuk membantu kamu, NYPD punya data tentang penjahat kakap ini! "
+
+Clue#1: NYPD telah menyelidiki tentang file secret.txt ini dan menemukan bahwa ini adalah RSA private key (dalam hexa) milik musuh bebuyutan sapiderman. namun, ada yang aneh! kemana public keynya?
+
+Clue#2: usut-punya usut, kita bisa melihat adanya kemiripan dari RSA private key mereka.. apakah mereka menggunakan angka yang sama ? 
