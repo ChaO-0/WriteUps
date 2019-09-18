@@ -1,0 +1,5 @@
+break *main+9
+disable $bpnum
+break *func+40
+disable $bpnum
+

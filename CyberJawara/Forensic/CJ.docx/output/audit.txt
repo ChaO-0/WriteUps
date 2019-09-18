@@ -1,0 +1,23 @@
+Foremost version 1.5.7 by Jesse Kornblum, Kris Kendall, and Nick Mikus
+Audit File
+
+Foremost started at Sat Sep  7 15:14:52 2019
+Invocation: foremost CJ.docx 
+Output directory: /home/chao/Downloads/output
+Configuration file: /etc/foremost.conf
+------------------------------------------------------------------
+File: CJ.docx
+Start: Sat Sep  7 15:14:52 2019
+Length: 481 KB (493032 bytes)
+ 
+Num	 Name (bs=512)	       Size	 File Offset	 Comment 
+
+0:	00000000.zip 	     481 KB 	          0 	 
+Finish: Sat Sep  7 15:14:52 2019
+
+1 FILES EXTRACTED
+	
+zip:= 1
+------------------------------------------------------------------
+
+Foremost finished at Sat Sep  7 15:14:52 2019

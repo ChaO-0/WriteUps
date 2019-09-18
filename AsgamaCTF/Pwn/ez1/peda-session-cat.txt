@@ -1,0 +1,5 @@
+break *main
+disable $bpnum
+break *main+54
+disable $bpnum
+

