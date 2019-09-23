@@ -1,9 +1,0 @@
-#Ghidra Lock File
-#Tue Sep 17 18:00:16 WITA 2019
-OS\ Name=Linux
-OS\ Version=4.15.0-62-generic
-Username=chao
-Hostname=Calculo
-<META>\ Supports\ File\ Channel\ Locking=Channel Lock
-OS\ Architecture=amd64
-Timestamp=9/17/19, 6\:00 PM

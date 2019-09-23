@@ -1,0 +1,3 @@
+break *login+47
+disable $bpnum
+
