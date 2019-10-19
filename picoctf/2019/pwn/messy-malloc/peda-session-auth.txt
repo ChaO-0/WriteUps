@@ -1,0 +1,3 @@
+break *0x0000000000400bd2
+break *print_flag
+
