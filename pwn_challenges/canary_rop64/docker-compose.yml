@@ -1,0 +1,10 @@
+version: "3"
+
+services:
+  main:
+    build: .
+    container_name: "canary"
+    network_mode: "bridge"
+    restart: on-failure
+    ports:
+      - "1337:12345" 

