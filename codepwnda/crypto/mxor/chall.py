@@ -6,7 +6,7 @@ def xors(msg, key):
 		res += chr(ord(msg[i]) ^ ord(key[i % len(key)]))
 	return res
 
-flag = "KSL{TZuyu_b3st_g1rl}"
+flag = "KCTF{Crypt0_itU_Sus4h_k4lo_g4k_b1S4_MAt3MAt1kA}"
 key = "tzu"
 #assert len(key) == 5 and all(x in string.lowercase for x in key)
 
