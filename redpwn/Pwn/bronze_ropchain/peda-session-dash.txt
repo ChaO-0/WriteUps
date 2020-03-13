@@ -1,3 +1,0 @@
-break *greet+68
-disable $bpnum
-

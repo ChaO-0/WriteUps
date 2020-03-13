@@ -1,0 +1,35 @@
+{% extends "bootstrap/base.html" %}
+{% block title %}WinterKosenNotepad{% endblock %}
+
+{% block content %}
+<main role="main" class="container">
+    <h1 class="mt-5">WinterKosenNotepad</h1>
+    <p>The most powerful notepad ever made.</p>
+
+    <div class="row">
+	<!-- Sidebar -->
+	<div class="col-sm-3 sidebar">
+	    <div class="nav nav-sidebar">
+		<ul class="nav nav-list affix">
+		    {% for note in data %}
+		    <li{% if loop.index0 == nid %} class="active"{% endif %}><a href="/note/{{ loop.index0 }}">{{note.title}}</a></li>
+		    {% endfor %}
+		    <hr>
+		    <li><a href="/reset" class="btn btn-danger">Reset All</a></li>
+		</ul>
+	    </div>
+	</div>
+	<!-- Textarea -->
+	<div class="col-sm-10 col-sm-offset-2">
+	    <form action="/save/{{ nid }}" method="POST">
+		<a href="/new" class="btn btn-success">New</a>
+		<button type="submit" class="btn btn-primary">Save</button>
+		<a href="/delete/{{ nid }}" class="btn btn-danger">Delete</a><br>
+		<label for="title">Title:</label>
+		<input type="text" id="title" name="title" value="{{data[nid].title}}"><br>
+		<textarea rows="16" style="width:100%" name="text">{{data[nid].text}}</textarea>
+	    </form>
+	</div>
+    </div>
+</main>
+{% endblock %}

