@@ -1,0 +1,99 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>Moar Horse 4</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" href="/static/css/style.css">
+        <link rel="stylesheet" href="../static/css/style.css">
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+              <li class="nav-item active">
+                <a class="nav-link" href="#">Home<span class="sr-only">(current)</span></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/race">Race</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/store">Store</a>
+              </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item">
+                Money: ${{money}}
+              </li>
+            </ul>
+          </div>
+        </nav>
+        <div class="container">
+          <div class="row mb-3">
+            <div class="col-12">
+
+              {% if error_message %}
+              <div class="alert alert-danger alert-dismissible fade in show">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                You don't own that horse!
+              </div>
+              {% endif %}
+
+              <h1 class="text-center">
+                <b> Horse Racing </b>
+              </h1>
+
+              <div class="card my-3">
+                <div class="row no-gutters">
+                  <div class="col-3">
+                    <img src="/static/images/mechahorse.png" class="px-3 py-3 card-img-top h-100" alt="{{boss_horse}}">
+                  </div>
+                  <div class="col-9">
+
+                    <div class="card-body">
+                      <h2 class="card-title">Current Champion: <b>{{boss_horse}}</b></h2>
+                      <p class="card-text">{{boss_horse}} has won again and again, will you be able to defeat him? If you can, you can even win an extra special flag!</p>
+                      <p class="card-text"><b>Speed:</b> 999999 </p>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+
+              <h2 class="text-center">
+                <b> Your Horses </b>
+              </h2>
+
+              {% for horse in owned_horses %}
+
+              <div class="card my-3">
+                <div class="row no-gutters">
+                  <div class="col-3">
+                    <img src="/static/images/horse.png" class="px-3 py-3 card-img-top h-100" alt="{{horse}}">
+                  </div>
+                  <div class="col-9">
+
+                    <div class="card-body">
+                      <h2 class="card-title">{{horse}}</h2>
+                      <p class="card-text">You own this horse.</p>
+                      <p class="card-text"><b>Speed:</b> ? </p>
+                      <a href="/do_race?horse={{horse}}" class="btn btn-primary">Race!</a>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    </body>
+</html>

@@ -1,0 +1,8 @@
+extends layout
+
+block content
+  h1 Diary
+  ul.list-group
+    each article, i in articles
+      li.list-group-item
+        a(href="/articles/"+article._id)= article.title

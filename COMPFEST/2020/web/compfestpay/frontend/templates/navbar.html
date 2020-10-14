@@ -1,0 +1,26 @@
+<nav class="navbar navbar-expand-md fixed-top navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="/">
+            <img height="30px" src="static/img/Compfest.png">
+        </a>
+        <div class="navbar-collapse offcanvas-collapse">
+            <ul class="navbar-nav ml-auto">
+                {% if wallet_value is defined %}
+                    <li class="nav-item {% if active == 'index' %} active {% endif %}">
+                        <a class="nav-link" href="/">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Log out</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item {% if active == 'login' %} active {% endif %}">
+                        <a class="nav-link" href="/login">Log in</a>
+                    </li>
+                    <li class="nav-item {% if active == 'register' %} active {% endif %}">
+                        <a class="nav-link" href="/register">Register</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>

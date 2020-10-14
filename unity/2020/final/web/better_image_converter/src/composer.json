@@ -1,0 +1,25 @@
+{
+    "name": "orbitale/imagemagick-php",
+    "description": "A system that allows creating commands to send to the exec() function to use ImageMagick's powerful features.",
+    "keywords": ["imagemagick", "imagick", "gd", "image", "converter"],
+    "homepage": "https://github.com/Orbitale/ImageMagickPHP",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Alex Rock Ancelet",
+            "email": "alex@orbitale.io",
+            "homepage": "http://www.orbitale.io/"
+        }
+    ],
+    "require": {
+        "php": "^7.2",
+        "symfony/process": "^4.0|^5.0"
+    },
+    "minimum-stability": "stable",
+    "autoload": {
+        "psr-4": {
+            "Orbitale\\Component\\ImageMagick\\": ""
+        }
+    }
+}

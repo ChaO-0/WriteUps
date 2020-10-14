@@ -1,0 +1,198 @@
+NHTTPD(8)                 BSD System Manager's Manual                NHTTPD(8)
+
+NNAAMMEE
+     nnhhttttppdd -- Nostromo webserver
+
+SSYYNNOOPPSSIISS
+     nnhhttttppdd [--ddhhvvrr4466] [--cc _c_o_n_f_i_g_f_i_l_e]
+
+DDEESSCCRRIIPPTTIIOONN
+     nnhhttttppdd is a simple, fast and secure HTTP server.  It runs as a single
+     process, handling connections with select(2).  For CGIs and directory
+     listing it does fork(2).  nnhhttttppdd has the minimum of HTTP/1.1 and CGI/1.1
+     implemented.  Also supported are; chroot, setuid, basic authentication,
+     SSL, IPv6, custom responses, aliases, and virtual hosts.  To stop the
+     server send a SIGTERM signal to the PID.  The access log is written in
+     standard CLF format.
+
+     After changes in the _c_o_n_f_i_g_f_i_l_e, nnhhttttppdd needs to be restarted, except for
+     changes of the parameters described in the CONFIGURATION RELOAD section.
+
+     CGIs are recognized by the file world executable flag.  If it is set, the
+     file is handled as CGI and will be executed.  Therefore it is possible to
+     use a CGI as index naming it like defined by the _d_o_c_i_n_d_e_x option.
+     Whether a file or directory is accessible by nnhhttttppdd is decided by its
+     world readable flag.  If it is not set on a file or directory, it can't
+     be accessed and a 403 Forbidden response will be sent.
+
+OOPPTTIIOONNSS
+     --dd      Enable debug mode.  More informations about ongoing processes are
+             written to the syslog(3) LOG_DAEMON facility.  Be careful, the
+             logs will grow very quickly in debug mode.
+
+     --hh      Prints short listing of nnhhttttppdd options.
+
+     --vv      Prints version.
+
+     --rr      nnhhttttppdd will chroot(2) to _s_e_r_v_e_r_r_o_o_t.  If you use this option, you
+             have to change _d_o_c_r_o_o_t_, virtual hosts, and aliases in _c_o_n_f_i_g_f_i_l_e
+             to paths within your _s_e_r_v_e_r_r_o_o_t.
+
+     --44      Enable IPv4 and IPv6.
+
+     --66      Enable IPv6 only.
+
+     --cc _c_o_n_f_i_g_f_i_l_e
+             Uses _c_o_n_f_i_g_f_i_l_e as configuration file.  If this option is not
+             set, _/_v_a_r_/_n_o_s_t_r_o_m_o_/_c_o_n_f_/_n_h_t_t_p_d_._c_o_n_f will be used by default.
+
+CCOONNFFIIGGUURRAATTIIOONN RREELLOOAADD
+     Parts of the configuration can be reloaded by sending a SIGHUP signal to
+     the PID.  Those are the following _c_o_n_f_i_g_f_i_l_e parameters for which config-
+     uration reload works:
+
+           logaccess
+           htaccess
+           custom_401
+           custom_403
+           custom_404
+           homedirs
+           homedirs_public
+
+     For changes in the _c_o_n_f_i_g_f_i_l_e sections ALIASES and VIRTUAL HOSTS no
+     reload is required at all.  All other parameter changes require a full
+     restart of the nnhhttttppdd process to get effective.
+
+     What also happens during a SIGHUP is that the basic authentication cre-
+     dentials cache gets cleared.  This can be useful if you have set a new
+     user password and want to have it effective immediately instead of giving
+     a user the ability to still login with the old, cached password.
+
+SSEETTUUIIDD
+     For security reasons it is recommended to run nnhhttttppdd under an extra user.
+     To do that create a new user on your system which has a valid entry in
+     the _/_e_t_c_/_p_a_s_s_w_d file.  Then set the _u_s_e_r option in your _c_o_n_f_i_g_f_i_l_e to
+     that user.  It is necessary to start nnhhttttppdd as root, so it can switch to
+     that user afterwards.  If the _u_s_e_r option is not set, nnhhttttppdd will run
+     under the user who started it, except root!
+
+     Be sure that the permissions on your _d_o_c_r_o_o_t are set correct, as nnhhttttppdd
+     needs write permissions at least on the logs directory.
+
+BBAASSIICC AAUUTTHHEENNTTIICCAATTIIOONN
+     To ask for basic authentication on certain directories within your
+     _d_o_c_r_o_o_t you have to create a file in that directory named like set by the
+     _h_t_a_c_c_e_s_s option in your _c_o_n_f_i_g_f_i_l_e.  The _h_t_a_c_c_e_s_s file should contain one
+     line including the _r_e_a_l_m option like in this example:
+
+           realm Unix Developers Realm
+
+     If the _r_e_a_l_m option can not be parsed from the _h_t_a_c_c_e_s_s file, it will be
+     set to a default value saying 'unknown realm'.
+
+     The list of authorized users and their passwords (DES encrypted) are
+     stored in the file set by the _h_t_p_a_s_s_w_d option in _c_o_n_f_i_g_f_i_l_e.  To create a
+     new user entry in this file, use the _c_r_y_p_t tool.
+
+     On BSD systems it is also possible to use the BSD authentication frame-
+     work.  To do that, set the _+_b_s_d_a_u_t_h keyword in the _h_t_p_a_s_s_w_d option
+     instead of a filename.  You are then able to authenticate via your oper-
+     ating system users.  Be aware that _+_b_s_d_a_u_t_h requires a SSL connection to
+     work, because you normally don't want to send your operating system pass-
+     word unencrypted over the network.  If this condition is not met, the
+     caller receives a 403 Forbidden response directly.  You can allow none
+     SSL connections to do BSD authentication by setting the _+_b_s_d_a_u_t_h_n_o_s_s_l
+     option.  Be sure that you really want that!
+
+     NNoottee: BSD authentication works just on OpenBSD for now.
+
+     All subdirectories below the _h_t_a_c_c_e_s_s file are protected automatically.
+     The client will be prompted for basic authentication if accessing such a
+     protected directory.
+
+SSSSLL
+     nnhhttttppdd uses the OpenSSL library, so be sure you have it installed on your
+     system if you want to use SSL.  To activate SSL uncomment _s_s_l_p_o_r_t which
+     is the port where we will listen for SSL connections, _s_s_l_c_e_r_t which is
+     the certificate file, and _s_s_l_c_e_r_t_k_e_y which is the certificate key file.
+     If the certificate and the key are correct nnhhttttppdd will startup with a log
+     entry for SSL activation in the log, otherwise it will complain and the
+     startup is aborted.  After a successful startup we are able to handle
+     secure HTTPS connections.
+
+CCUUSSTTOOMM RREESSPPOONNSSEESS
+     If an error response occurs the server will normally send a default
+     answer saying for example 404 Not Found.  Instead of this default
+     response, you can define your personal responses, using the custom
+     response options in the _c_o_n_f_i_g_f_i_l_e.  There you define an html file which
+     will be displayed instead of the default response.
+
+     The custom response html file will be searched in every defined _d_o_c_r_o_o_t,
+     what means in your default _d_o_c_r_o_o_t and every virtual host.  So you can
+     define different custom responses for each virtual host.  If a custom
+     response is defined but the corresponding html file is not found, the
+     default response will be send.  Supported custom responses are:
+
+           401 Unauthorized
+           403 Forbidden
+           404 Not Found
+
+AALLIIAASSEESS
+     With aliases you can create a fake path which will point to a real path.
+     For example, to let all links starting with /icons point to another path,
+     just add the following line in your _c_o_n_f_i_g_f_i_l_e:
+
+           /icons /var/nostromo/icons
+
+VVIIRRTTUUAALL HHOOSSTTSS
+     To serve virtual hosts, just add a line for each virtual host in
+     _c_o_n_f_i_g_f_i_l_e with the domain name as option and port if not 80, and the
+     _d_o_c_r_o_o_t of that virtual host, as in this example:
+
+           www.rahel.ch     /var/nostromo/htdocs/www.rahel.ch
+           www.nazgul.ch:81 /var/nostromo/htdocs/www.nazgul.ch
+
+     For each virtual host a separate access_log is written automatically with
+     the following syntax as example:
+
+           access_log-www.rahel.ch
+           access_log_www.nazgul.ch:81
+
+HHOOMMEEDDIIRRSS
+     To serve the home directories of your users via HTTP, enable the _h_o_m_e_d_i_r_s
+     option by defining the path in where the home directories are stored,
+     normally /home.  To access a users home directory enter a ~ in the URL
+     followed by the home directory name like in this example:
+
+           http://www.nazgul.ch/~hacki/
+
+     The content of the home directory is handled exactly the same way as a
+     directory in your document root.  If some users don't want that their
+     home directory can be accessed via HTTP, they shall remove the world
+     readable flag on their home directory and a caller will receive a 403
+     Forbidden response.  Also, if basic authentication is enabled, a user can
+     create an .htaccess file in his home directory and a caller will need to
+     authenticate.
+
+     You can restrict the access within the home directories to a single sub
+     directory by defining it via the _h_o_m_e_d_i_r_s___p_u_b_l_i_c option.
+
+FFIILLEESS
+     /var/nostromo/conf/nhttpd.conf  server configuration
+     /var/nostromo/conf/mimes        mime types
+     /var/nostromo/logs/nhttpd.pid   pid file
+     /var/nostromo/logs/access_log   http log
+     /usr/local/sbin/crypt           create user with DES password
+     /usr/local/sbin/nhttpd          http daemon
+
+HHIISSTTOORRYY
+     First version of nnhhttttppdd appeared in 2004.
+
+TTHHAANNKKSS
+     Thanks to Marc Balmer, Daniel Hartmeier, Boris Meyer, and Wouter Schoot
+     for their support.
+
+AAUUTTHHOORRSS
+     Marcus Glocker <marcus@nazgul.ch>
+
+BSD                              Apr 10, 2016                              BSD

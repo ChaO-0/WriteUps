@@ -1,7 +1,7 @@
 import sys
 # from program import program
 
-program = "M+s+>s>++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++[s<<l>*<s>>l-]<<l-s>l*-s*-s*-s*-s*-s*-s>l*+++++s*-----s****s>>l+s[Ml-s<<l>,[<<*>>s<<<l>>>%<s>>l<s>l+s<l]>l]<<lp"
+program = ""
 reg = 0
 mem = [0 for _ in range(10)]
 p = 0

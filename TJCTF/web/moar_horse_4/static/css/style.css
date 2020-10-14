@@ -1,0 +1,29 @@
+body {
+    background-color: darkgray;
+}
+
+.navbar {
+    margin-bottom: 20px;
+  	font-size: 30px;
+}
+
+.nav-item {
+	margin-left: 10px;
+	margin-right: 10px;
+	color: #9a9a9a;
+}
+
+.body-text {
+	font-size: 20px;
+}
+
+.legal-text {
+	font-size: 14px;
+	padding-left: 50px;
+	padding-right: 50px;
+}
+
+h1 {
+	font-size: 50px;
+	margin-bottom: 40px;
+}

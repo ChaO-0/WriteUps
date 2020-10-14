@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {% if username is defined %}
+        Dashboard | COMPFEST Pay
+    {% else %}
+        COMPFEST Pay
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+{% if username is defined %}
+<div class="nav-scroller bg-white box-shadow">
+	<div class="container">
+		<nav class="nav nav-underline" id="nav-tab" role="tablist">
+			<a class="nav-link" id="nav-news" href="#news" data-toggle="tab" role="tab" aria-controls="news" aria-selected="false">News</a>
+		  <a class="nav-link active" href="#mywallet" id="nav-mywallet" data-toggle="tab" role="tab" aria-controls="mywallet" aria-selected="false">My Wallet</a>
+		  <a class="nav-link" href="#pay" id="nav-pay" data-toggle="tab" role="tab" aria-controls="pay" aria-selected="false">Send</a>
+		</nav>
+	</div>
+</div>
+{% endif %}
+
+<main role="main" class="container">
+	{% if username is defined %}
+	<div class="tab-content" id="nav-tabContent">
+		{% include 'news.html' %}
+		{% include 'mywallet.html' %}
+		{% include 'pay.html' %}
+	</div>
+	{% else %}
+		<div class="d-flex align-items-center p-4 my-3 bg-success rounded box-shadow">
+			<img class="mr-3" src="static/img/compfest-white.png" alt="" width="48" height="48">
+			<div class="lh-100">
+				<h5 class="mb-2 text-white lh-100">Welcome to COMPFEST Pay!</h5>
+				<medium style="color:rgba(255,255,255,0.75)">A Secure Cryptocurrency brought to you by us</medium>
+			</div>
+		</div>
+		{% include 'news.html' %}
+	{% endif %}
+	
+</main>
+    
+{% endblock %}
+{% block customjs %}
+<script>
+	$(function(){
+		$('#nav-tabs a').on('click', function (e) {
+			e.preventDefault(); 
+			$(this).tab('show');
+		});
+		{% if username is not defined %}
+			$('#news').addClass('active');
+			$('#news').addClass('show');
+		{% endif %}
+	});
+</script>
+{% endblock %}

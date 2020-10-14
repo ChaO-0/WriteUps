@@ -1,0 +1,1 @@
+#darkCTF{w0w_s0_m4ny_funct10ns}

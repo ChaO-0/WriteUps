@@ -1,0 +1,15 @@
+## Pre installation
+```bash
+yarn (for installing dependency packages)
+cp .env.examples .env
+```
+
+## Seeder flag
+```bash
+yarn seed
+```
+
+## Running service
+```bash
+yarn start
+```

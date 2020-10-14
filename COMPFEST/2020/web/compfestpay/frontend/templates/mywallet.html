@@ -1,0 +1,72 @@
+<div id="mywallet" class="tab-pane fade show active" role="tabpanel" aria-labelledby="nav-mywallet">
+    <div class="d-flex align-items-center p-4 my-3 bg-success rounded box-shadow">
+        <img class="mr-3" src="static/img/compfest-white.png" alt="" width="48" height="48">
+        <div class="lh-100">
+            <h5 class="mb-2 text-white lh-100">Hello, <span id="myUsername" value="{{ username }}">{{ username }}</span>!</h5>
+            <medium style="color:rgba(255,255,255,0.75)">We remind you to keep your wallet signature a secret</medium>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xl-3 col-md-4 my-3">
+            <div class="card box-shadow h-100 py-2" style="border-left: .25rem solid #4e73df!important;">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Coins</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">&#x23b;&nbsp;{{ wallet_value }}</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-9 col-md-8 my-3">
+            <div class="card box-shadow h-100 py-2" style="border-left: .25rem solid #e74a3b!important">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">Wallet Signature</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ wallet_signature }}</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-wallet fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xl-12 col-md-12 my-3">
+            <div class="card box-shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-uppercase mb-3">Recent received payments</div>
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">From</th>
+                                        <th scope="col">Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for transaction in recent_transactions %}
+                                        <tr>
+                                            <td>{{loop.index}}</td>
+                                            <td value={{transaction.from}}>{{transaction.from}}</td>
+                                            <td value={{transaction.amount}}>&#x23b;&nbsp;{{transaction.amount}}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

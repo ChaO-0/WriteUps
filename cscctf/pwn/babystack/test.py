@@ -4,8 +4,8 @@ import sys
 import roputils
 from pwn import *
 
-#p = process("./babystack")
-p = remote("babystack.problem.cscctf.com", 11111)
+p = process("./babystack")
+# p = remote("babystack.problem.cscctf.com", 11111)
 
 pwn_file = ELF('./babystack')
 offset = 20

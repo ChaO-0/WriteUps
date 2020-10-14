@@ -1,0 +1,23 @@
+<div id="news" class="tab-pane fade" role="tabpanel" aria-labelledby="nav-news">
+    <div class="row">
+        <div class="col-xl-12 col-md-12 my-3">
+            <div class="card box-shadow h-100 py-2">
+                {% for user in top_ten_users %}
+                <div class="card-body bg-warning">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-uppercase mb-3">#{{loop.index}} Richest user</div>
+                            <h2 class="text-center">
+                                <i class="fas fa-crown fa-2x text-gray-300"></i> &nbsp;
+                                <span style="font-size:3.5rem;">{{user.username}}</span>
+                            </h2>
+                            <h4 class="text-center">Wallet amount: &#x23b;{{user.value}}</h4>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,122 @@
+{% block customcss %}
+<link rel="stylesheet" href="static/css/spinner.css">
+{% endblock %}
+
+<div id="pay" class="tab-pane fade" role="tabpanel" aria-labelledby="nav-pay">
+
+
+    <div style="display: none" class="popup" id="spinner">
+        <div class="d-flex align-items-center p-4 my-3 bg-warning rounded box-shadow">
+            <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+        </div>
+    </div>
+
+    <div style="display: none" class="popup" id="goodPopup">
+        <div class="d-flex align-items-center p-4 my-3 bg-success rounded box-shadow">
+            <div class="lh-100">
+                <h5 class="mb-0 text-white lh-100" id="goodPopupContent"></h5>
+            </div>
+        </div>
+    </div>
+    <div style="display: none" class="popup" id="badPopup">
+        <div class="d-flex align-items-center p-4 my-3 bg-danger rounded box-shadow">
+            <div class="lh-100">
+                <h5 class="mb-0 text-white lh-100" id="badPopupContent"></h5>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xl-12 col-md-12 my-3">
+            <div class="card box-shadow h-100 py-2">
+                <div class="card-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="toUser">Enter username to pay</label>
+                            <input type="username" class="form-control" id="toUser" placeholder="Enter username">
+                        </div>
+                        <div class="form-group">
+                            <label for="amount">Amount to pay (min 1, max 5000000)</label>
+                            <input type="number" class="form-control" id="amount" placeholder="Amount">
+                        </div>
+                        <div class="form-group">
+                            <label for="mySignature">Your Signature</label>
+                            <input type="signature" class="form-control" id="mySignature" placeholder="Signature" value="{{ wallet_signature }}" readonly>
+                        </div>
+                        <div>
+                            <label class="form-check-label" for="flagCheckbox">Buy Flag?</label>
+                            <input class="checkbox-inline form-control mb-2" style="width: auto;" type="checkbox" value="" id="flagCheckbox">
+                        </div>
+                    </form>
+                    <button type="submit" class="btn btn-primary" id="submitButton">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+{% block customjs %}
+<script>
+    $(document).ready(function(){
+        $("#submitButton").click(function(){
+            if($("#flagCheckbox").prop("checked") == true) {
+                var from = $("#myUsername").text();
+                var signature = $("#mySignature").val();
+                $.ajax({
+                    url: "/flag",
+                    type: "POST",
+                    data: {'from' : from, 'signature': signature},
+                    dataType: "html",
+                }).done(function(data) {
+                    $("#goodPopupContent").text(data)
+                    $("#goodPopup").css({ display: "block" });
+                }).fail(function(data) {
+                    $("#badPopupContent").text(data.responseText)
+                    $("#badPopup").css({ display: "block" });
+                }).always(function()    {
+                    $("#spinner").css({display :"none"})
+                });
+            }
+            else    {
+                var from = $("#myUsername").text();
+                var to = $("#toUser").val();
+                var amount = $("#amount").val();
+                var signature = $("#mySignature").val();
+                $(".popup").css({display :"none"})
+                $("#spinner").css({display :"block"})
+                $.ajax({
+                    url: "/pay",
+                    type: "POST",
+                    data: {'from' : from, 'to' : to, 'amount' : amount, 'signature': signature},
+                    dataType: "html",
+                }).done(function(data) {
+                    $("#goodPopupContent").text(data)
+                    $("#goodPopup").css({ display: "block" });
+                    window.setTimeout(function()    {
+                        location.reload(true);
+                    }, 2000 );
+                }).fail(function(data) {
+                    $("#badPopupContent").text(data.responseText)
+                    $("#badPopup").css({ display: "block" });
+                }).always(function()    {
+                    $("#spinner").css({display :"none"})
+                });
+            }
+        });
+
+        $("#flagCheckbox").click(function() {
+            if($(this).prop("checked") == true){
+                var to = $("#toUser").attr('disabled', true);
+                var amount = $("#amount").attr('disabled', true);
+            }
+            else if($(this).prop("checked") == false){
+                var to = $("#toUser").attr('disabled', false);
+                var amount = $("#amount").attr('disabled', false);
+            }
+        });
+    });
+    
+</script>
+{% endblock %}

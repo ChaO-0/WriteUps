@@ -1,0 +1,44 @@
+language: php
+
+sudo: required
+
+branches:
+    only:
+        - master
+
+cache:
+    directories:
+        - '$HOME/.composer/cache'
+
+addons:
+    apt:
+        packages:
+            - libjpeg-dev
+            - libpng-dev
+            - libgif-dev
+php:
+    - '7.2'
+    - '7.3'
+
+before_install: |
+    composer self-update
+    curl -L "https://imagemagick.org/download/ImageMagick.tar.gz" | tar xz
+    cd ImageMagick-*
+    ./configure
+    make
+    sudo make install
+    sudo ldconfig /usr/local/lib
+    which magick
+    find /usr/local -iname "*magick*"
+    cd ..
+    mkdir -p build/logs
+
+install:
+    - composer install --no-interaction
+    - composer require --dev satooshi/php-coveralls:~0.6
+
+script:
+    - vendor/bin/phpunit --coverage-text --coverage-clover build/logs/clover.xml
+
+after_success:
+    - travis_retry php vendor/bin/coveralls -v
